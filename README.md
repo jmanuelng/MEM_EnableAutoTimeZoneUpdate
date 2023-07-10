@@ -4,7 +4,7 @@
 
 Scripts to manage **"Auto Time Zone Updater"** 'tzautoupdate' service on a Windows device. Intended to be used as part of a "Proactive Remediations", now just "Remediations", in Microsoft Intune to automatically adjust the system's time zone.
 
-In a scenario where a Windows device has been deployed using Autopilot, the automatic adjustment of the system's time zone becomes very importante. By default, every Windows device starts out with the time zone set to Pacific Time (UTC-08:00), which is not ideal for devices deployed in different time zones. This can cause confusion and potential issues with time-dependent functions and applications.
+In a scenario where a Windows device has been deployed using Autopilot, the automatic adjustment of the system's time zone becomes very important. By default, every Windows device starts out with the time zone set to Pacific Time (UTC-08:00), which is not ideal for devices deployed in different time zones. This can cause confusion and potential issues with time-dependent functions and applications.
 
 The 'tzautoupdate' service, when enabled, allows Windows to automatically adjust the system's time zone based on the device's location. Particularly useful for devices that move between different time zones.
 
@@ -12,11 +12,10 @@ However, during an Autopilot deployment, the 'tzautoupdate' service is not alway
 
 ## Scripts
 
-- **`Detect_EnableAutoTimeZoneUpdate.ps1`** Checks if the 'tzautoupdate' service is set to Manual. It is the detection script. It checks whether the Windows Time Zone Auto Update service (tzautoupdate) is configured to start manually. 
-Script stores the name of the service and the desired start-up setting in variables. It then tries to get the service object, suppressing errors if the service is not found. If the service exists, it compares its StartType with the desired action. Returns the appropriate message and exits based on the comparison.
+- **`Detect_EnableAutoTimeZoneUpdate.ps1`** Checks if the 'tzautoupdate' service is set to Manual. It is the detection script. Stores the name of the service and the desired start-up setting in variables. It then tries to get the service object, suppressing errors if the service is not found. If the service exists, it compares its StartType with the desired action. Returns the appropriate message and exits based on the comparison.
 
 - **`Fix_EnableAutoTimeZoneUpdate.ps1`** Sets 'tzautoupdate' service to Manual. This is the remediation script. It enables the "Automatic Time Zone" service (tzautoupdate) which fixes the time zone to be automatically configured using location services when Autopilot has been set up to hide Privacy Settings. Remember to also configure a Configuration Profile to enable "Location Services".
-The script defines a function to manage services, which takes the service name and the action to be performed as parameters. It then calls this function to manage the 'tzautoupdate' service, setting it to Manual. It finallyreturns the appropriate message and exits with a success status code (0).
+The script defines a function to manage services, which takes the service name and the action to be performed as parameters. It then calls this function to manage the 'tzautoupdate' service, setting it to Manual. It finally returns the appropriate message and exits with a success status code (0).
 
 ## Usage
 
