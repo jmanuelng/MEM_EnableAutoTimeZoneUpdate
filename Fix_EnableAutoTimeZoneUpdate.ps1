@@ -57,12 +57,13 @@ Function Manage-Services {
         # If the service exists, perform the specified action
         if ($service) {
             Switch ($Action) {
-                "Start" { Start-Service -Name $ServiceName; Break; } # Start the service
-                "Stop" { Stop-Service -Name $ServiceName; Break; } # Stop the service
-                "Restart" { Restart-Service -Name $ServiceName; Break; } # Restart the service
-                "Disable" { Set-Service -Name $ServiceName -StartupType Disabled -Status Stopped; Break; } # Disable the service
-                "Auto" { Set-Service -Name $ServiceName -StartupType Automatic -Status Running; Break; } # Set the service to automatic
-                "Manual" { Set-Service -Name $ServiceName -StartupType Manual -Status Running; Break; } # Set the service to manual
+                "Start" { Start-Service -Name $ServiceName } # Start the service
+                "Stop" { Stop-Service -Name $ServiceName } # Stop the service
+                "Restart" { Restart-Service -Name $ServiceName } # Restart the service
+                "Disable" { Set-Service -Name $ServiceName -StartupType Disabled -Status Stopped } # Disable the service
+                "Auto" { Set-Service -Name $ServiceName -StartupType Automatic -Status Running } # Set the service to automatic
+                "Manual" { Set-Service -Name $ServiceName -StartupType Manual -Status Running } # Set the service to manual
+                default { throw "incorrect action type provided." }
             }
 
             # Get the updated service object and output it
@@ -89,13 +90,11 @@ $Action = "Manual"
 $txtResult = "" # Status or result summary
 #endregion
 
-Write-Host = "`n`n" # Easier read in AgentExecutore log.
-
 #region Process
 # Start a try block to catch and handle exceptions
 try {
     # Output a message indicating that the script is fixing the time zone service startup type
-    Write-Host "Fixing TimeZone service startup type to $Action."
+    Write-Host "`n`nFixing TimeZone service startup type to $Action."
 
     # Call the function to manage services
     # NOTE: In PowerShell, any value or object that is not captured or consumed will be sent to the pipeline, which is often the output stream.
